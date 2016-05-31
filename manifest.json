@@ -10,11 +10,12 @@
 		"128": "icon128.png"
 	},
 	"background": {
-		"scripts": ["background.js"]
+		"scripts": ["background.js"],
+		"persistent": false
 	},
 	"minimum_chrome_version": "12.0.707.0",
 	"permissions": [
-		"http://youtube.com/",
+		"https://www.youtube.com/",
 		"cookies"
 	]
 }
