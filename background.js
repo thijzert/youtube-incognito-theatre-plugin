@@ -14,6 +14,8 @@
 function theatre(store_id)
 {
 	var to_set = [
+		{domain: "vimeo.com", url: "https://vimeo.com", name: "continuous_play_v3", value: "o"},  // Disable autoplay
+
 		{domain: "youtube.com", url: "https://www.youtube.com", name: "wide", value: "1"},  // Theatre (or 'Cinema') mode
 		{domain: "youtube.com", url: "https://www.youtube.com", name: "PREF", value: "f1=50000000&f5=30030&gl=US"},  // Disable autoplay, global mode
 		{domain: "youtube.com", url: "https://www.youtube.com", name: "HideTicker", value: "true"}  // Remind me later
@@ -36,6 +38,7 @@ function theatre(store_id)
 chrome.cookies.onChanged.addListener(function()
 {
 	var domains = {
+		".vimeo.com": 1,
 		".youtube.com": 1
 	};
 

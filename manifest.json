@@ -1,6 +1,6 @@
 {
 	"name": "YouTube Incognito Theatre mode",
-	"version": "1.0",
+	"version": "1.1",
 	"description": "Always disable autoplay and use theatre mode, even when browsing incognito.",
 	"manifest_version": 2,
 	"icons": {
@@ -16,6 +16,7 @@
 	"minimum_chrome_version": "12.0.707.0",
 	"permissions": [
 		"https://www.youtube.com/",
+		"https://vimeo.com/",
 		"cookies"
 	]
 }
