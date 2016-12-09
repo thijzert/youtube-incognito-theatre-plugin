@@ -5,8 +5,6 @@
  * available under the terms of the BSD 3-clause license.
  **/
 
-var YOUTUBE_DOMAIN = 'youtube.com';
-var YOUTUBE_URL = 'https://www.youtube.com';
 
 /**
  * Set 'disable autoplay' and 'theatre mode' cookies
@@ -16,9 +14,9 @@ var YOUTUBE_URL = 'https://www.youtube.com';
 function theatre(store_id)
 {
 	var to_set = [
-		{name: "wide", value: "1"},  // Theatre (or 'Cinema') mode
-		{name: "PREF", value: "f1=50000000&f5=30030&gl=US"},  // Disable autoplay, global mode
-		{name: "HideTicker", value: "true"}  // Remind me later
+		{domain: "youtube.com", url: "https://www.youtube.com", name: "wide", value: "1"},  // Theatre (or 'Cinema') mode
+		{domain: "youtube.com", url: "https://www.youtube.com", name: "PREF", value: "f1=50000000&f5=30030&gl=US"},  // Disable autoplay, global mode
+		{domain: "youtube.com", url: "https://www.youtube.com", name: "HideTicker", value: "true"}  // Remind me later
 	];
 
 	for ( var i = 0; i < to_set.length; i++ )
@@ -26,8 +24,8 @@ function theatre(store_id)
 		chrome.cookies.set({
 			name: to_set[i].name,
 			value: to_set[i].value,
-			domain: '.' + YOUTUBE_DOMAIN,
-			url: YOUTUBE_URL,
+			domain: to_set[i].domain,
+			url: to_set[i].url,
 			secure: true,
 			expirationDate: 10*365*86400 + (new Date()).getTime() / 1000,
 			storeId: store_id
@@ -37,7 +35,11 @@ function theatre(store_id)
 
 chrome.cookies.onChanged.addListener(function()
 {
-	if ( evt.cookie.domain == '.' + YOUTUBE_DOMAIN )
+	var domains = {
+		".youtube.com": 1
+	};
+
+	if ( domains[evt.cookie.domain] )
 	{
 		theatre( evt.cookie.storeId );
 	}
