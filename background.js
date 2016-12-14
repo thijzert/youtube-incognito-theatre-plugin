@@ -14,7 +14,7 @@
 function theatre(store_id)
 {
 	var to_set = [
-		{domain: "vimeo.com", url: "https://vimeo.com", name: "continuous_play_v3", value: "o"},  // Disable autoplay
+		{domain: "vimeo.com", url: "https://vimeo.com", name: "continuous_play_v3", value: "0"},  // Disable autoplay
 
 		{domain: "youtube.com", url: "https://www.youtube.com", name: "wide", value: "1"},  // Theatre (or 'Cinema') mode
 		{domain: "youtube.com", url: "https://www.youtube.com", name: "PREF", value: "f1=50000000&f5=30030&gl=US"},  // Disable autoplay, global mode
@@ -23,19 +23,32 @@ function theatre(store_id)
 
 	for ( var i = 0; i < to_set.length; i++ )
 	{
-		chrome.cookies.set({
-			name: to_set[i].name,
-			value: to_set[i].value,
-			domain: to_set[i].domain,
-			url: to_set[i].url,
-			secure: true,
-			expirationDate: 10*365*86400 + (new Date()).getTime() / 1000,
-			storeId: store_id
-		});
+		(function()
+		{
+			var setthis = to_set[i];
+			chrome.cookies.get({ url: setthis.url, name: setthis.name, storeId: store_id }, function( cookie )
+			{
+				if ( !cookie || cookie.value != setthis.value )
+				{
+					var s = true;
+					if ( cookie )  s = !!cookie.secure;
+
+					chrome.cookies.set({
+						name: setthis.name,
+						value: setthis.value,
+						domain: setthis.domain,
+						url: setthis.url,
+						secure: s,
+						expirationDate: 10*365*86400 + (new Date()).getTime() / 1000,
+						storeId: store_id
+					});
+				}
+			});
+		})();
 	}
 }
 
-chrome.cookies.onChanged.addListener(function()
+chrome.cookies.onChanged.addListener(function(evt)
 {
 	var domains = {
 		".vimeo.com": 1,
