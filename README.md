@@ -4,3 +4,5 @@ Incognito mode is great when you want to browse with a clean slate. However, thi
 
 This extension simply resets YouTube to widescreen (or "Theatre" or "Cinema") mode, and unticks autoplay.
 It also unticks 'Autoplay next video' on Vimeo.
+
+NOTE: in order to actually work in Incognito mode, remember to tick "allow in incognito" in the extension tab.
